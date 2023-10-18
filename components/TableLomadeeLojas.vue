@@ -14,7 +14,6 @@
         <Button label="Buscar" severity="success" @click="searchData" />
       </template>
     </Toolbar>
-
     <div class="h-5" />
 
     <DataTable v-model:filters="filters" showGridlines="" :value="lojas" removableSort sortField="hasOffer"

@@ -30,3 +30,4 @@ const saveNewTab = (index) => {
 };
 
 </script>
+
