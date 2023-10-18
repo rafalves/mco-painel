@@ -12,6 +12,9 @@
       <TabPanel header="Lojas">
         <TableLomadeeLojas />
       </TabPanel>
+      <TabPanel header="Melhores Ofertas">
+        <TableLomadeeMelhoresOfertas />
+      </TabPanel>
     </TabView>
 
   </div>

@@ -30,24 +30,52 @@
 
           <div class="flex gap-2 items-center">
 
-            <div v-if="searchType === '_category'" class="flex gap-2 items-center">
-              <span>Página:</span>
-              <InputText class="w-24" v-model="queryPage" type="number" @keypress.enter="searchData" />
-              <span>ID Categ</span>
-              <InputText v-if="searchType === '_category'" class="w-24 inputRequired" v-model="inputCategoryId"
-                type="number" @keypress.enter="searchData" />
-              <span>Codigo Loja:</span>
-              <InputText class="w-24 inputOptional" v-model="queryStoreId" type="number" @keypress.enter="searchData" />
-              <span>Preç Min:</span>
-              <InputText class="w-24 inputOptional" v-model="queryMinPrice" type="number" @keypress.enter="searchData" />
-              <span>Preç Max:</span>
-              <InputText class="w-24 inputOptional" v-model="queryMaxPrice" type="number" @keypress.enter="searchData" />
+            <div v-if="searchType === '_category'" class="flex flex-col gap-2">
+
+              <div class="flex gap-2 items-center">
+                <span>Página:</span>
+                <InputText class="w-24" v-model="queryPage" type="number" @keypress.enter="searchData" />
+                <span>ID Categ</span>
+                <InputText v-if="searchType === '_category'" class="w-24 inputRequired" v-model="inputCategoryId"
+                  type="number" @keypress.enter="searchData" />
+              </div>
+
+              <div class="flex gap-2 items-center">
+                <span>Codigo Loja:</span>
+                <InputText class="w-24 inputOptional" v-model="queryStoreId" type="number" @keypress.enter="searchData" />
+                <span>Preç Min:</span>
+                <InputText class="w-24 inputOptional" v-model="queryMinPrice" type="number"
+                  @keypress.enter="searchData" />
+                <span>Preç Max:</span>
+                <InputText class="w-24 inputOptional" v-model="queryMaxPrice" type="number"
+                  @keypress.enter="searchData" />
+              </div>
+
+              <div class="flex flex-wrap gap-3 items-center">
+                <span>Filtrar por -</span>
+
+                <div class="flex gap-2 items-center">
+                  <span>Nenhum:</span>
+                  <RadioButton v-model="querySort" name="querySort" value="none" />
+                </div>
+
+                <div class="flex gap-2 items-center"
+                  v-tooltip="'ordena pelo menor desconto, api não ordena pelo maior desconto'">
+                  <span>Desconto:</span>
+                  <RadioButton v-model="querySort" name="querySort" value="discount.Asc" />
+                </div>
+
+                <div class="flex gap-2 items-center" v-tooltip="'ordena pelo menor preço'">
+                  <span>Preço:</span>
+                  <RadioButton v-model="querySort" name="querySort" value="price" />
+                </div>
+              </div>
             </div>
 
             <div v-if="searchType === '_id'" class="flex gap-2 items-center">
-              <span>Codigo Oferta:</span>
+              <span>ID Oferta:</span>
               <InputText class="w-24 inputRequired" v-model="offerId" type="number" @keypress.enter="searchData" />
-              <span>Codigo Loja:</span>
+              <span>ID Loja:</span>
               <InputText class="w-24 inputRequired" v-model="queryStoreId" type="number" @keypress.enter="searchData" />
             </div>
 
@@ -57,45 +85,74 @@
                 <InputText class="w-24" v-model="queryPage" type="number" @keypress.enter="searchData" />
                 <span>Termo:</span>
                 <InputText v-model="queryKeyword" type="text" @keypress.enter="searchData"
-                  placeholder="Digite uma palavra chave" />
+                  placeholder="Digite uma palavra chave" class="inputRequired" />
 
               </div>
 
               <div class="flex item gap-2 items-center">
                 <span>ID Categoria(s):</span>
-                <InputText class="w-24" v-model="queryCategoriesId" type="number" @keypress.enter="searchData"
-                  v-tooltip="'ID de 1 ou mais categorias separadas por virgula'" />
+                <InputText class="w-24 inputOptional" v-model="queryCategoriesId" type="number"
+                  @keypress.enter="searchData" v-tooltip="'ID de 1 ou mais categorias separadas por virgula'" />
+                <span>ID Loja:</span>
+                <InputText class="w-24 inputOptional" v-model="queryStoreId" type="number" @keypress.enter="searchData" />
                 <span>Preç Min:</span>
-                <InputText class="w-24" v-model="queryMinPrice" type="number" @keypress.enter="searchData" />
+                <InputText class="w-24 inputOptional" v-model="queryMinPrice" type="number"
+                  @keypress.enter="searchData" />
                 <span>Preç Max:</span>
-                <InputText class="w-24" v-model="queryMaxPrice" type="number" @keypress.enter="searchData" />
+                <InputText class="w-24 inputOptional" v-model="queryMaxPrice" type="number"
+                  @keypress.enter="searchData" />
                 <span>Categorias Filhas?</span>
-                <Checkbox v-model="querywithChildrenCategories" :binary="true" />
+                <Checkbox v-model="querywithChildrenCategories" :binary="true" class="inputOptional" />
               </div>
             </div>
+
+            <div v-if="searchType === '_store'" class="flex flex-col gap-2">
+
+              <div class="flex gap-2 items-center">
+                <span>Página:</span>
+                <InputText class="w-24" v-model="queryPage" type="number" @keypress.enter="searchData" />
+                <span>ID Loja:</span>
+                <InputText class="w-24 inputRequired" v-model="queryStoreId" type="number" @keypress.enter="searchData" />
+              </div>
+
+              <div class="flex gap-2 items-center">
+
+                <span>ID Categoria(s):</span>
+                <InputText class="w-24 inputOptional" v-model="queryCategoriesId" type="number"
+                  @keypress.enter="searchData" v-tooltip="'ID de 1 ou mais categorias separadas por virgula'" />
+                <span>Preç Min:</span>
+                <InputText class="w-24 inputOptional" v-model="queryMinPrice" type="number"
+                  @keypress.enter="searchData" />
+                <span>Preç Max:</span>
+                <InputText class="w-24 inputOptional" v-model="queryMaxPrice" type="number"
+                  @keypress.enter="searchData" />
+                <span>Categorias Filhas?</span>
+                <Checkbox v-model="querywithChildrenCategories" :binary="true" class="inputOptional" />
+              </div>
+              <div class="flex flex-wrap gap-3 items-center">
+                <span>Filtrar por -</span>
+
+                <div class="flex gap-2 items-center">
+                  <span>Nenhum:</span>
+                  <RadioButton v-model="querySort" name="querySort" value="none" />
+                </div>
+
+                <div class="flex gap-2 items-center"
+                  v-tooltip="'ordena pelo menor desconto, api não ordena pelo maior desconto'">
+                  <span>Desconto:</span>
+                  <RadioButton v-model="querySort" name="querySort" value="discount.Asc" />
+                </div>
+
+                <div class="flex gap-2 items-center" v-tooltip="'ordena pelo menor preço'">
+                  <span>Preço:</span>
+                  <RadioButton v-model="querySort" name="querySort" value="price" />
+                </div>
+              </div>
+
+            </div>
           </div>
 
-          <div v-if="searchType === '_category'" class="flex flex-wrap gap-3 items-center">
-            <span>Filtrar por -</span>
 
-            <div class="flex gap-2 items-center">
-              <span>Nenhum:</span>
-              <RadioButton v-model="querySort" name="querySort" value="none" />
-            </div>
-
-            <div class="flex gap-2 items-center"
-              v-tooltip="'ordena pelo menor desconto, api não ordena pelo maior desconto'">
-              <span>Desconto:</span>
-              <RadioButton v-model="querySort" name="querySort" value="discount.Asc" />
-            </div>
-
-            <div class="flex gap-2 items-center" v-tooltip="'ordena pelo menor preço'">
-              <span>Preço:</span>
-              <RadioButton v-model="querySort" name="querySort" value="price" />
-            </div>
-
-
-          </div>
 
         </div>
       </template>
@@ -253,7 +310,6 @@ watchEffect(() => {
     queryKeyword.value = ''
     querywithChildrenCategories.value = false
   }
-
   if (searchType.value === '_id') {
     offerPath.value = `${searchType.value}/${offerId.value}`
 
@@ -262,8 +318,13 @@ watchEffect(() => {
   }
   if (searchType.value === '_search') {
     offerPath.value = searchType.value
+  }
+  if (searchType.value === '_store') {
+    offerPath.value = `${searchType.value}/${queryStoreId.value}`
 
-
+    offerId.value = ''
+    queryKeyword.value = ''
+    querywithChildrenCategories.value = false
   }
 })
 
@@ -290,6 +351,7 @@ const searchData = async () => {
       maxPrice: queryMaxPrice.value ? queryMaxPrice.value : undefined,
       minPrice: queryMinPrice.value ? queryMinPrice.value : undefined,
       sort: querySort.value !== 'none' ? querySort.value : undefined,
+      withChildrenCategories: querywithChildrenCategories.value ? querywithChildrenCategories.value : undefined,
       sourceId: publisherId,
     }
   })

@@ -3,10 +3,22 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   ssr: false,
   modules: [
-    '@nuxtjs/tailwindcss'
+    '@nuxtjs/tailwindcss', 'nuxt-primevue',
   ],
-  css: ["@/assets/css/main.css", "primevue/resources/themes/lara-light-blue/theme.css", 'primeicons/primeicons.css', 'primevue/resources/primevue.min.css'],
-  build: {
-    transpile: ["primevue"]
-  }
+  css: ["@/assets/css/main.css", 'primevue/resources/themes/lara-light-indigo/theme.css'],
+  primevue: {
+    usePrimeVue: true,
+    options: {
+      ripple: true,
+    },
+    components: {
+      prefix: '',
+      include: ['Button', 'InputText', 'TabView', 'TabPanel', 'DataTable',
+        'Column', 'Checkbox', 'Toolbar', 'RadioButton'],
+    },
+    directives: {
+      prefix: '',
+      include: ['Tooltip'],
+    },
+  },
 })
