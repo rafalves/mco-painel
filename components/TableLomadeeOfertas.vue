@@ -228,6 +228,13 @@
         </template>
       </Column>
 
+      <Column header="Publicar">
+        <template #body="slotProps">
+          <Button label="Publicar Oferta" @click="publishOffer(
+            slotProps.data.name, slotProps.data.link, slotProps.data.thumbnail)"></Button>
+        </template>
+      </Column>
+
       <!-- não sei o que este campo faz -->
       <!-- <Column field="installment" header="installment" sortable /> -->
 
@@ -273,6 +280,7 @@
 
 <script setup>
 import { FilterMatchMode } from 'primevue/api';
+// import { publishFromLomadee } from '#imports';
 
 const publisherId = '23174711'
 const apiToken = '169695979229290a4e48a'
@@ -381,6 +389,23 @@ const clearSearchOptions = () => {
   queryKeyword.value = ''
   querySort.value = 'none'
 }
+
+const publishOffer = async (name, link, imgUrl) => {
+  console.log('inicio')
+  console.log(name)
+  console.log(link)
+  console.log(imgUrl)
+  console.log('fim')
+
+  const { data } = await useFetch('/api/postOffer/lomadee', {
+    method: 'post',
+    body: { name: name, link: link, imgUrl: imgUrl }
+  })
+
+  console.log('retorno do metodo post')
+  console.log(data.value)
+}
+
 </script> 
 
 <style scoped>
