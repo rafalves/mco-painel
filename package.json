@@ -11,13 +11,17 @@
   },
   "devDependencies": {
     "@nuxt/devtools": "latest",
-    "@nuxtjs/tailwindcss": "^6.8.0",
+    "@nuxtjs/tailwindcss": "^6.8.1",
     "nuxt": "^3.8.0",
+    "nuxt-icon": "^0.5.0",
     "nuxt-primevue": "^0.0.3",
     "vue": "^3.3.4",
     "vue-router": "^4.2.5"
   },
   "dependencies": {
-    "appwrite": "^13.0.0"
+    "appwrite": "^13.0.0",
+    "cheerio": "^1.0.0-rc.12",
+    "primeicons": "^6.0.1",
+    "telegraf": "^4.15.0"
   }
 }

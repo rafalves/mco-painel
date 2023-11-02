@@ -6,7 +6,7 @@
         <div class="flex flex-col gap-2">
 
           <div class="flex flex-wrap gap-3 items-center">
-            <span>Tipo de Busca -</span>
+            <span>Tipo de a -</span>
             <div class="flex gap-2 items-center" v-tooltip="'digite o id de uma categoria'">
               <span>ID Categoria:</span>
               <RadioButton v-model="searchType" name="searchType" value="_category" />
@@ -231,7 +231,7 @@
       <Column header="Publicar">
         <template #body="slotProps">
           <Button label="Publicar Oferta" @click="publishOffer(
-            slotProps.data.name, slotProps.data.link, slotProps.data.thumbnail)"></Button>
+            slotProps.data)"></Button>
         </template>
       </Column>
 
@@ -390,20 +390,38 @@ const clearSearchOptions = () => {
   querySort.value = 'none'
 }
 
-const publishOffer = async (name, link, imgUrl) => {
-  console.log('inicio')
-  console.log(name)
-  console.log(link)
-  console.log(imgUrl)
-  console.log('fim')
+const publishOffer = async (slotProps) => {
+  console.log(JSON.stringify(slotProps, null, 2))
+  const prod = {}
 
-  const { data } = await useFetch('/api/postOffer/lomadee', {
+  prod.name = (slotProps.name !== undefined || null) ? prod.name = slotProps.name : undefined
+
+  prod.advertiserCategory = (slotProps.advertiserCategory !== undefined || null) ? prod.advertiserCategory = slotProps.advertiserCategory : undefined
+
+  prod.link = (slotProps.link !== undefined || null) ? prod.link = slotProps.link : undefined
+
+  prod.thumbnail = (slotProps.thumbnail !== undefined || null) ? prod.thumbnail = slotProps.thumbnail : undefined
+
+  prod.price = (slotProps.price !== undefined || null) ? prod.price = slotProps.price : undefined
+
+  prod.priceFrom = (slotProps.priceFrom !== undefined || null) ? prod.priceFrom = slotProps.priceFrom : undefined
+
+  prod.discount = (slotProps.discount !== undefined || null) ? prod.discount = slotProps.discount : undefined
+
+  prod.store_name = (slotProps.store.name !== undefined || null) ? prod.store_name = slotProps.store.name : undefined
+
+  prod.store_thumbnail = (slotProps.store.thumbnail !== undefined || null) ? prod.store_thumbnail = slotProps.store.thumbnail : undefined
+
+  prod.offer_source = 'lomadee'
+
+
+  const { data, error } = await useFetch('/api/postOffer/lomadee', {
     method: 'post',
-    body: { name: name, link: link, imgUrl: imgUrl }
+    body: prod
   })
 
-  console.log('retorno do metodo post')
-  console.log(data.value)
+  if (data.value) console.log(JSON.stringify(data.value))
+  if (error.value) console.log(error.value)
 }
 
 </script> 

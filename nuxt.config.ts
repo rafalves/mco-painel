@@ -1,11 +1,21 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-  devtools: { enabled: false },
+  devtools: { enabled: true },
   ssr: false,
   modules: [
-    '@nuxtjs/tailwindcss', 'nuxt-primevue',
+    '@nuxtjs/tailwindcss', 'nuxt-primevue', 'nuxt-icon'
   ],
-  css: ["@/assets/css/main.css", 'primevue/resources/themes/lara-light-indigo/theme.css'],
+  runtimeConfig: {
+    rafaelStrapiToken: '',
+    lomadeePublisherID: '',
+    lomadeeApiToken: '',
+    telegramBotToken: '',
+    strapiWebhookToken: '',
+    public: {
+      lomadeeBaseUrl: '',
+    }
+  },
+  css: ["@/assets/css/main.css", 'primevue/resources/themes/lara-light-indigo/theme.css', 'primeicons/primeicons.css'],
   primevue: {
     usePrimeVue: true,
     options: {
@@ -13,8 +23,7 @@ export default defineNuxtConfig({
     },
     components: {
       prefix: '',
-      include: ['Button', 'InputText', 'TabView', 'TabPanel', 'DataTable',
-        'Column', 'Checkbox', 'Toolbar', 'RadioButton'],
+      include: ['Button', 'InputText', 'InputNumber', 'TabView', 'TabPanel', 'DataTable', 'Column', 'Checkbox', 'Toolbar', 'RadioButton', 'Textarea'],
     },
     directives: {
       prefix: '',

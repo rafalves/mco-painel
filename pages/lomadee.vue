@@ -15,6 +15,9 @@
       <TabPanel header="Melhores Ofertas">
         <TableLomadeeMelhoresOfertas />
       </TabPanel>
+      <TabPanel header="Ofertas Postados">
+        <LomadeePostedOffers />
+      </TabPanel>
     </TabView>
 
   </div>

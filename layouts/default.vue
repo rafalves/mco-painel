@@ -2,7 +2,10 @@
   <Html class="scroll-smooth bg-[#f7eff5]">
   <div class="flex flex-col h-full antialiased ">
     <header class="bg-slate-300">
-      header
+      <div class="flex justify-center gap-3">
+        <NuxtLink to="/amazon">Amazon</NuxtLink>
+        <NuxtLink to="/lomadee">Lomadee</NuxtLink>
+      </div>
     </header>
 
     <div class="flex-1">
