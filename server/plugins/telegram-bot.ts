@@ -4,6 +4,7 @@ import { message } from 'telegraf/filters'
 
 export default defineNitroPlugin((nitroApp) => {
   const config = useRuntimeConfig()
+
   const bot = new Telegraf(config.telegramBotToken)
 
   bot.start((ctx) => ctx.reply('Welcome'))

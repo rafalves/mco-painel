@@ -3,7 +3,6 @@ import { OfferForm } from '@/types/Offer'
 export default defineEventHandler(async (event) => {
   const { rafaelStrapiToken } = useRuntimeConfig(event)
 
-  console.log('entrou api')
   let offer: OfferForm | null = null
   const body = await readBody(event)
   const formData = new FormData()
@@ -24,30 +23,19 @@ export default defineEventHandler(async (event) => {
     post_update: typeof body.post_update === 'boolean' ? body.post_update : false
   }
 
-  console.log(body)
-  console.log(offer)
-
   if (body.image) {
-    console.log('entrei no if da imagem')
-
     const dataURLtoBlob = async (imgUrl: string) => {
       const blob = await $fetch(imgUrl).catch((err) => {
         sendError(event, createError({ statusText: 'Internal Server Error blob', status: 500, data: { status: 500, message: err } }))
       })
       return blob
     }
-
     blobImage = await dataURLtoBlob(body.image) as Blob
   }
 
-  console.log('blob: ' + blobImage)
-
   if (blobImage instanceof Blob) {
-
-    console.log('é um blob')
     formData.append('files.image', blobImage, `${offer.name}.jpg`)
     formData.append('data', JSON.stringify(offer));
-    console.log('append form finalizado')
 
     const data = await $fetch('https://melhores-compras.online/dev/api/offers', {
       method: 'post',
@@ -58,7 +46,7 @@ export default defineEventHandler(async (event) => {
       sendError(event, createError({ statusText: 'Internal Server Error', status: 500, data: { status: 500, message: err } }))
     })
 
-    console.log("data: ")
+    console.log("Data posted: ")
     console.log(data)
 
     return data

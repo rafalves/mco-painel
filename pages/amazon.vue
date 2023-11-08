@@ -22,7 +22,7 @@
           </div>
 
           <span class="p-float-label">
-            <Textarea v-model="offer.name" autoResize rows="1" severity="info" class="w-full h-full" />
+            <Textarea v-model="offer.name" autoResize rows="1" class="w-full h-full" />
             <label>Nome</label>
           </span>
 
@@ -171,7 +171,7 @@ async function postOffer() {
 
   const { data: postData, status, error } = await useFetch('/api/postOffer/amazon', {
     method: 'POST',
-    body: offer.value
+    body: JSON.stringify(offer.value)
   })
 
   if (error.value) {
@@ -179,8 +179,10 @@ async function postOffer() {
   }
 
   if (status.value === 'success') {
-    console.log('Data sucesso: ' + postData.value)
+    console.log('Data sucesso: ' + JSON.stringify(postData.value, null, 2))
   }
+
+  tags.value = []
 }
 
 watchEffect(() => {
