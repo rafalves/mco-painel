@@ -41,8 +41,8 @@ export default defineEventHandler(async (event) => {
 
     const data = await $fetch('https://melhores-compras.online/dev/api/offers', {
       method: 'post',
-      // headers: { 'Authorization': `Bearer ${rafaelStrapiToken}` },
-      headers: { 'Authorization': `Bearer ${token}` },
+      headers: { 'Authorization': `Bearer ${rafaelStrapiToken}` },
+      // headers: { 'Authorization': `Bearer ${token}` },
       body: formData
     }).catch((err) => {
       console.log(err.data)
