@@ -4,16 +4,22 @@ export default defineEventHandler(async (event) => {
 
   const body = await readBody(event)
 
-  // console.log(body)
+  console.log('entrei scrape')
 
   const prod_link = body.link
 
   let offer: Record<string, string | number | null | false> = {}
 
-  const res = await $fetch(prod_link).catch((err) => {
+  const res = await $fetch(prod_link, {
+    headers: {
+      "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36",
+      "Accept-Language": "en-US,en;q=0.9,pt-BR;q=0.8,pt;q=0.7"
+    }
+  }).catch((err) => {
     throw createError({ status: 500, statusMessage: 'Internal Server Error', data: err })
   })
 
+  console.log(res)
   const $ = cheerio.load(res as string);
 
   const title = $('#productTitle').text().trim()

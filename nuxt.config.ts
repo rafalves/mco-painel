@@ -29,5 +29,5 @@ export default defineNuxtConfig({
       prefix: '',
       include: ['Tooltip'],
     },
-  },
+  }
 })

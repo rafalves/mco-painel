@@ -19,5 +19,5 @@ export default defineNitroPlugin((nitroApp) => {
     event.context.bot = bot
   })
 
-  console.log('Loading bot plugin')
+  console.log('Loading telegram bot plugin')
 }) 
