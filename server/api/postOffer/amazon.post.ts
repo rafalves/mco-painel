@@ -1,12 +1,14 @@
 import { OfferForm } from '@/types/Offer'
+import sharp from 'sharp'
 
 export default defineEventHandler(async (event) => {
+  console.log('entrei no post amazon')
   const { rafaelStrapiToken } = useRuntimeConfig(event)
 
   let offer: OfferForm | null = null
   const body = await readBody(event)
   const formData = new FormData()
-  let blobImage: Blob | null = null
+  let bufferImage: Buffer | null = null
 
   offer = {
     name: body.name,
@@ -24,17 +26,21 @@ export default defineEventHandler(async (event) => {
   }
 
   if (body.image) {
-    const dataURLtoBlob = async (imgUrl: string) => {
-      const blob = await $fetch(imgUrl).catch((err) => {
-        sendError(event, createError({ statusText: 'Internal Server Error blob', status: 500, data: { status: 500, message: err } }))
+    const dataURLtoBuffer = async (imgUrl: string) => {
+      const buffer = await $fetch(imgUrl, { responseType: "arrayBuffer" }).catch((err) => {
+        sendError(event, createError({ statusText: 'Internal Server Error buffer', status: 500, data: { status: 500, message: err } }))
       })
-      return blob
+      return buffer
     }
-    blobImage = await dataURLtoBlob(body.image) as Blob
+    bufferImage = await dataURLtoBuffer(body.image) as Buffer
   }
 
-  if (blobImage instanceof Blob) {
-    formData.append('files.image', blobImage, `${offer.name}.jpg`)
+  const resized = await sharp(bufferImage as Buffer).resize(200).toBuffer({ resolveWithObject: true })
+  const blob = new Blob([resized.data], { type: 'image/jpeg' });
+
+  // if (bufferImage instanceof Buffer) {
+  if (resized) {
+    formData.append('files.image', blob, `${offer.name}.jpg`)
     formData.append('data', JSON.stringify(offer));
 
     const data = await $fetch('https://melhores-compras.online/dev/api/offers', {

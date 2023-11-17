@@ -29,5 +29,16 @@ export default defineNuxtConfig({
       prefix: '',
       include: ['Tooltip'],
     },
+  },
+  nitro: {
+    hooks: {
+      'dev:reload': () => require('sharp')
+    },
+    storage: {
+      db: {
+        driver: 'fsLite',
+        base: './.data/db'
+      }
+    },
   }
 })
