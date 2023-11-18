@@ -19,7 +19,8 @@ export interface Offer {
       updatedAt?: string
       publishedAt?: string
       prod_link?: string
-      post_update?: boolean
+      post_update?: boolean,
+      twitterPost?: string,
       image?: Media
     }
   },
@@ -38,5 +39,6 @@ export interface OfferForm {
   tags?: string
   offer_source?: string
   prod_link?: string
-  post_update?: boolean
+  post_update?: boolean,
+  twitterPost?: string,
 }

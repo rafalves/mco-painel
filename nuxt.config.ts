@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     lomadeePublisherID: '',
     lomadeeApiToken: '',
     telegramBotToken: '',
+    logsBotToken: '',
     strapiWebhookToken: '',
     public: {
       lomadeeBaseUrl: '',

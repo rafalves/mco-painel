@@ -33,6 +33,7 @@ export default defineEventHandler(async (event) => {
     offer.offer_source = response.data.attributes.offer_source ?? null
     offer.prod_link = response.data.attributes.prod_link ?? null
     offer.imgUrl = `${imageBaseUrl}${response.data.attributes.image.data[0].attributes.url}` ?? null
+    offer.twitterPost = response.data.attributes.twitterPost
 
     console.log(offer)
 

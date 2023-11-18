@@ -57,7 +57,7 @@ export const useTwitterAPI = {
     }
   },
   authenticatedClientV1: async (): Promise<TwitterApi> => {
-
+    console.log('entrou na funcao v1')
     const accessToken = await useStorage('db').getItem<string>('accessTokenV1')
     const accessSecret = await useStorage('db').getItem<string>('accessSecretV1')
 
@@ -68,7 +68,7 @@ export const useTwitterAPI = {
       accessToken: accessToken!,
       accessSecret: accessSecret!,
     });
-
+    console.log('saiu da funcao v1')
     return client
   }
 }

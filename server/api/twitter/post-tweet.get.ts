@@ -5,6 +5,7 @@ export default defineEventHandler(async (event) => {
   console.log('entrou')
 
   const imageUrl = 'https://melhores-compras.online/dev/uploads/Untitled_a9fca56a59.jpg'
+  
   const buffer = await useGetImage.buffer(imageUrl)
   if (!buffer) {
     console.log('erro no buffer')

@@ -22,7 +22,8 @@ export default defineEventHandler(async (event) => {
     tags: body.tags,
     offer_source: body.offer_source,
     prod_link: body.prod_link,
-    post_update: typeof body.post_update === 'boolean' ? body.post_update : false
+    post_update: typeof body.post_update === 'boolean' ? body.post_update : false,
+    twitterPost: body.twitterPost
   }
 
   if (body.image) {
@@ -36,11 +37,15 @@ export default defineEventHandler(async (event) => {
   }
 
   const resized = await sharp(bufferImage as Buffer).resize(200).toBuffer({ resolveWithObject: true })
-  const blob = new Blob([resized.data], { type: 'image/jpeg' });
+  const blob1 = new Blob([resized.data], { type: 'image/jpeg' });
+
+  const bgImage: Buffer = await useSharp.withBackground(resized.data)
+  const blob2 = new Blob([bgImage], { type: 'image/webp' });
 
   // if (bufferImage instanceof Buffer) {
   if (resized) {
-    formData.append('files.image', blob, `${offer.name}.jpg`)
+    formData.append('files.image', blob1, `${offer.name}-normal.jpg`)
+    formData.append('files.image', blob2, `${offer.name}-bg.jpg`)
     formData.append('data', JSON.stringify(offer));
 
     const data = await $fetch('https://melhores-compras.online/dev/api/offers', {
@@ -52,8 +57,7 @@ export default defineEventHandler(async (event) => {
       sendError(event, createError({ statusText: 'Internal Server Error', status: 500, data: { status: 500, message: err } }))
     })
 
-    console.log("Data posted: ")
-    console.log(data)
+    console.log("Data posted: " + data)
 
     return data
 

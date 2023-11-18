@@ -5,7 +5,6 @@ export const useGetImage = {
       console.log('Fetch image error: ' + err)
       return undefined
     })
-    console.log('buffer image success')
     return buffer as Buffer
   }
 }
